@@ -1,22 +1,58 @@
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
   
   return (
     <div className="App">
-          <Counter></Counter>
+         <Users></Users>
     </div>
   );
 }
 
-function Counter ()  {
-      return(
-        <div>
-            <h1>Count: </h1>
-            <button>Increase</button>
-        </div>
-      )
+function Users() {
+
+  const [users , setUsers] = useState([]);
+
+  useEffect(()=>{
+      fetch('https://jsonplaceholder.typicode.com/users')
+      .then(res=>res.json())
+      .then(date => setUsers(date))
+  },[]);
+
+    return(
+      <div>
+          <h1>External Users</h1>
+          <p>{users.length}</p>
+          {
+            users.map(user => <DisPlayUsers name={user.name}></DisPlayUsers> )
+          }
+      </div>
+    )
 }
+
+function DisPlayUsers (props) {
+   return(
+    <div>
+      <h3>{props.name}</h3>
+    </div>
+   )
+}
+
+// function Counter ()  {
+//     const [count, setCount] = useState(0);
+
+//     const Increase = () => { setCount(count + 1)};
+//     const decrease = () => { setCount(count - 1)};
+
+//       return(
+//         <div>
+//             <h1>Count: {count}</h1>
+//             <button onClick={Increase}>Increase</button>
+//             <button onClick={decrease}>Decrease</button>
+//         </div>
+//       )
+// }
 
 
 // function Product(props) {
